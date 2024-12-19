@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accès à la caméra</title>
+</head>
+<body>
+    <h1>Activer votre caméra</h1>
+    <p>En cliquant sur "Activer", vous autorisez l'accès à votre caméra.</p>
+    <video id="video" width="640" height="480" autoplay></video>
+    <script>
+        // Fonction pour demander l'accès à la caméra
+        function startCamera() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        // Associer le flux vidéo au lecteur HTML
+                        const video = document.getElementById('video');
+                        video.srcObject = stream;
+                    })
+                    .catch(function(error) {
+                        console.error("Erreur d'accès à la caméra :", error);
+                        alert("Impossible d'accéder à la caméra.");
+                    });
+            } else {
+                alert("La caméra n'est pas prise en charge sur ce navigateur.");
+            }
+        }
+
+        // Activer la caméra dès que la page est chargée
+        document.addEventListener('DOMContentLoaded', startCamera);
+    </script>
+</body>
+</html>
